@@ -1,2 +1,3 @@
-# dmf-kit
-Developer kit for interacting with Data Management Foundation.
+# Data Management Foundation: Scala Kit
+
+Scala developer kit for working with Data Management Foundation.
