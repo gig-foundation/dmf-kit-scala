@@ -1,0 +1,5 @@
+version: 1.0.{build}
+build_script:
+  - sh: sbt ';+compile;+test:compile;+it:compile'
+test_script:
+  - sh: sbt '+test;+it:test'
