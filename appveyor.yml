@@ -8,14 +8,17 @@ environment:
 
 install:
   - cinst sbt -y
+  - cmd: SET PATH=%PATH;"C:\Program Files (x86)\sbt\bin"
 
 build_script:
   - sbt ';+compile;+test:compile;+it:compile'
 
 test_script:
-  - sbt '+test;+it:test'
+  - sbt ';+test;+it:test'
 
 cache:
-  - '%USERPROFILE%\.ivy2'
-  - '%USERPROFILE%\.m2'
-  - '%USERPROFILE%\.sbt'
+  - '%USERPROFILE%\.ivy2' -> **\dependencies.sbt, project\*
+  - '%USERPROFILE%\.m2' -> **\dependencies.sbt, project\*
+  - '%USERPROFILE%\.sbt' -> **\dependencies.sbt, project\*
+  - C:\ProgramData\chocolatey\bin -> appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> appveyor.yml
