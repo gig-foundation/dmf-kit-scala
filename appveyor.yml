@@ -10,10 +10,10 @@ install:
   - cinst sbt -y
 
 build_script:
-  - sh: sbt ';+compile;+test:compile;+it:compile'
+  - sbt ';+compile;+test:compile;+it:compile'
 
 test_script:
-  - sh: sbt '+test;+it:test'
+  - sbt '+test;+it:test'
 
 cache:
   - '%USERPROFILE%\.ivy2'
