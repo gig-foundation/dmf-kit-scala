@@ -2,7 +2,7 @@
 
 Scala developer kit for working with Data Management Foundation.
 
-[appveyor-build]: https://ci.appveyor.com/project/gig-foundation/dmf-kit-scala
+[appveyor-build]: https://ci.appveyor.com/project/michaelahlers/dmf-kit-scala
 [appveyor-status-badge]: https://ci.appveyor.com/api/projects/status/nl2qf0jp70r2sj8i/branch/v0.0.x?svg=true
 
 [codacy-build]: https://codacy.com/app/gig-foundation/dmf-kit-scala
