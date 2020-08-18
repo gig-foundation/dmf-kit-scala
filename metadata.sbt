@@ -1,7 +1,7 @@
 name := "dmf-kit-scala"
 description := "Scala developer kit for working with Data Management Foundation."
 
-ThisBuild / organization := "foundation.gig"
+ThisBuild / organization := "gig.foundation"
 ThisBuild / organizationName := "gig Foundation"
 
 // ThisBuild / homepage := ???
@@ -12,12 +12,11 @@ ThisBuild / developers :=
     Nil
 
 ThisBuild / scmInfo :=
-  Some(ScmInfo(
-    browseUrl = url("https://github.com/gig-foundation/dmf-kit-scala"),
-    connection = "https://github.com/gig-foundation/dmf-kit-scala.git",
-    devConnection = Some("git@github.com:gig-foundation/dmf-kit-scala.git")
-  ))
+  Some(
+    ScmInfo(
+      browseUrl = url("https://github.com/gig-foundation/dmf-kit-scala"),
+      connection = "https://github.com/gig-foundation/dmf-kit-scala.git",
+      devConnection = Some("git@github.com:gig-foundation/dmf-kit-scala.git")
+    ))
 
 ThisBuild / licenses += "MIT" -> new URL("http://opensource.org/licenses/MIT")
-
-
