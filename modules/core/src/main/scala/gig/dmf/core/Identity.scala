@@ -1,4 +1,4 @@
-package gig.core
+package gig.dmf.core
 
 /**
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
