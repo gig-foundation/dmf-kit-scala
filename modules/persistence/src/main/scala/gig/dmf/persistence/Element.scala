@@ -1,6 +1,8 @@
 package gig.dmf.persistence
 
-import gig.dmf.core.Identity
+import gig.dmf.core._
+
+import scala.collection.immutable._
 
 /**
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
@@ -28,8 +30,11 @@ sealed trait Reference extends Element {
 
 object Reference {
 
-  def apply(data: IndexedSeq[Identity]): Reference =
-    StrictReference(data)
+  def apply(identities: Iterable[Identity]): Reference =
+    StrictReference(identities.toIndexedSeq)
+
+  def apply(identity: Identity, identities: Identity*): Reference =
+    Reference(identity +: identities.toIndexedSeq)
 
   implicit class Ops(val reference: Reference) extends AnyVal {
     def identities: IndexedSeq[Identity] = reference.data

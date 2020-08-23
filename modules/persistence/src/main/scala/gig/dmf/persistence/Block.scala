@@ -20,8 +20,13 @@ sealed trait References extends Block {
 }
 
 object References {
-  def apply(elements: IndexedSeq[Reference]): References =
-    StrictReferences(elements)
+
+  def apply(references: Iterable[Reference]): References =
+    StrictReferences(references.toIndexedSeq)
+
+  def apply(reference: Reference, references: Reference*): References =
+    References(reference +: references.toIndexedSeq)
+
 }
 
 /**
