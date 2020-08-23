@@ -13,14 +13,16 @@ import scala.collection.immutable._
 object implicits {
 
   implicit val CodecIdentity: Codec[Identity] =
-    Codec.bimap(
-      _.digest,
-      Identity(_))
+    Codec
+      .bimap(
+        _.digest,
+        Identity(_))
 
   implicit val CodecReference: Codec[Reference] =
-    Codec.bimap(
-      _.identities,
-      Reference(_))
+    Codec
+      .bimap[IndexedSeq[Identity], Reference](
+        _.identities,
+        Reference(_))
 
   implicit val CodecReferences: Codec[References] =
     Codec
