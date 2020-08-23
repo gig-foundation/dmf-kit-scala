@@ -19,6 +19,11 @@ sealed trait References extends Block {
   override type E = Reference
 }
 
+object References {
+  def apply(elements: IndexedSeq[Reference]): References =
+    StrictReferences(elements)
+}
+
 /**
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since August 23, 2020

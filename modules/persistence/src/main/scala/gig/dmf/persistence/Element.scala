@@ -26,4 +26,15 @@ sealed trait Reference extends Element {
   override type Data = IndexedSeq[Identity]
 }
 
+object Reference {
+
+  def apply(data: IndexedSeq[Identity]): Reference =
+    StrictReference(data)
+
+  implicit class Ops(val reference: Reference) extends AnyVal {
+    def identities: IndexedSeq[Identity] = reference.data
+  }
+
+}
+
 case class StrictReference(data: IndexedSeq[Identity]) extends Reference

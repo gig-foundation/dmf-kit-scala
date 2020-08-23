@@ -7,9 +7,24 @@ import scala.collection.immutable._
  * @since August 17, 2020
  */
 sealed trait Entity {
-  def blocks: IndexedSeq[Block]
+  def references: References
+}
+
+object Entity {
+
+  def apply(
+    references: References
+  ): Entity =
+    StrictEntity(
+      references
+    )
+
+  implicit class Ops(val entity: Entity) extends AnyVal {
+    def blocks: IndexedSeq[Block] =
+      IndexedSeq(entity.references)
+  }
 }
 
 case class StrictEntity(
-  blocks: IndexedSeq[Block])
+  references: References)
   extends Entity
