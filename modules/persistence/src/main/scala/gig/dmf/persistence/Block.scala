@@ -34,3 +34,27 @@ object References {
  * @since August 23, 2020
  */
 case class StrictReferences(elements: IndexedSeq[Reference]) extends References
+
+/**
+ * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
+ * @since August 23, 2020
+ */
+sealed trait Selectors extends Block {
+  override type E = Selector
+}
+
+object Selectors {
+
+  def apply(selectors: Iterable[Selector]): Selectors =
+    StrictSelectors(selectors.toIndexedSeq)
+
+  def apply(selector: Selector, selectors: Selector*): Selectors =
+    Selectors(selector +: selectors.toIndexedSeq)
+
+}
+
+/**
+ * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
+ * @since August 23, 2020
+ */
+case class StrictSelectors(elements: IndexedSeq[Selector]) extends Selectors

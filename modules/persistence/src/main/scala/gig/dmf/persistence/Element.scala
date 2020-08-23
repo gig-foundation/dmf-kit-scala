@@ -43,3 +43,23 @@ object Reference {
 }
 
 case class StrictReference(data: IndexedSeq[Identity]) extends Reference
+
+sealed trait Selector extends Element {
+  override type Data = IndexedSeq[Range]
+}
+
+object Selector {
+
+  def apply(ranges: Iterable[Range]): Selector =
+    StrictSelector(ranges.toIndexedSeq)
+
+  def apply(range: Range, ranges: Range*): Selector =
+    Selector(range +: ranges.toIndexedSeq)
+
+  implicit class Ops(val selector: Selector) extends AnyVal {
+    def ranges: IndexedSeq[Range] = selector.data
+  }
+
+}
+
+case class StrictSelector(data: IndexedSeq[Range]) extends Selector

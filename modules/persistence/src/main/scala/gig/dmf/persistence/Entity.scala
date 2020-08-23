@@ -8,23 +8,30 @@ import scala.collection.immutable._
  */
 sealed trait Entity {
   def references: References
+  def selectors: Selectors
 }
 
 object Entity {
 
   def apply(
-    references: References
+    references: References,
+    selectors: Selectors
   ): Entity =
     StrictEntity(
-      references
+      references,
+      selectors
     )
 
   implicit class Ops(val entity: Entity) extends AnyVal {
     def blocks: IndexedSeq[Block] =
-      IndexedSeq(entity.references)
+      IndexedSeq(
+        entity.references,
+        entity.selectors
+      )
   }
 }
 
 case class StrictEntity(
-  references: References)
+  references: References,
+  selectors: Selectors)
   extends Entity
