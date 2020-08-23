@@ -43,7 +43,7 @@ object implicits {
     Decoder { reader =>
       val unbounded = reader.readArrayOpen(1)
 
-      val references = reader.read[References]
+      val references = reader.read[References]()
       val entity = Entity(
         references
       )
