@@ -1,4 +1,4 @@
-package gig.dmf.core
+package gig.dmf.models.common
 
 /**
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>

@@ -1,7 +1,6 @@
-package gig.dmf.persistence.cbor
+package gig.dmf.canonical.encodings.cbor
 
-import gig.dmf.core.Identity
-import gig.dmf.persistence._
+import gig.dmf.core._
 import io.bullet.borer._
 
 import scala.collection.immutable._

@@ -1,19 +1,14 @@
 lazy val `dmf-kit` =
   (project in file("."))
     .aggregate(
-      `core`,
-      `persistence`,
-      `persistence-cbor`)
+      `models-canonical`,
+      `models-common`)
 
-lazy val `core` = project in file("modules") / "core"
+lazy val `models-canonical` =
+  (project in file("modules") / "models" / "canonical")
+    .dependsOn(`models-common`)
 
-lazy val `persistence` =
-  (project in file("modules") / "persistence")
-    .dependsOn(`core`)
-
-lazy val `persistence-cbor` =
-  (project in file("modules") / "persistence-cbor")
-    .dependsOn(`persistence`)
+lazy val `models-common` = project in file("modules") / "models" / "common"
 
 publish / skip := true
 
