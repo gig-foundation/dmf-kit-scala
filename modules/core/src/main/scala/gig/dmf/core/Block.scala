@@ -1,4 +1,4 @@
-package gig.dmf.persistence
+package gig.dmf.core
 
 import scala.collection.immutable._
 
