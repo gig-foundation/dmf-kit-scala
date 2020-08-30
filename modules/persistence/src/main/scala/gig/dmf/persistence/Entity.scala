@@ -7,31 +7,17 @@ import scala.collection.immutable._
  * @since August 17, 2020
  */
 sealed trait Entity {
-  def references: References
-  def selectors: Selectors
+  def blocks: Iterable[Block]
 }
 
 object Entity {
 
-  def apply(
-    references: References,
-    selectors: Selectors
-  ): Entity =
-    StrictEntity(
-      references,
-      selectors
-    )
+  def apply(blocks: Iterable[Block]): Entity =
+    StrictEntity(blocks.toIndexedSeq)
 
-  implicit class Ops(val entity: Entity) extends AnyVal {
-    def blocks: IndexedSeq[Block] =
-      IndexedSeq(
-        entity.references,
-        entity.selectors
-      )
-  }
+  def apply(block: Block, blocks: Block*): Entity =
+    StrictEntity(block +: blocks.toVector)
+
 }
 
-case class StrictEntity(
-  references: References,
-  selectors: Selectors)
-  extends Entity
+case class StrictEntity(blocks: IndexedSeq[Block]) extends Entity

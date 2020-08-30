@@ -7,25 +7,16 @@ import scala.collection.immutable._
  * @since August 17, 2020
  */
 sealed trait Block {
-  type E <: Element
-  def elements: IndexedSeq[E]
+  def elements: Iterable[Element]
 }
 
-/**
- * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
- * @since August 23, 2020
- */
-sealed trait References extends Block {
-  override type E = Reference
-}
+object Block {
 
-object References {
+  def apply(elements: Iterable[Element]): Block =
+    StrictBlock(elements.toIndexedSeq)
 
-  def apply(references: Iterable[Reference]): References =
-    StrictReferences(references.toIndexedSeq)
-
-  def apply(reference: Reference, references: Reference*): References =
-    References(reference +: references.toIndexedSeq)
+  def apply(element: Element, elements: Element*): Block =
+    StrictBlock(element +: elements.toVector)
 
 }
 
@@ -33,28 +24,4 @@ object References {
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since August 23, 2020
  */
-case class StrictReferences(elements: IndexedSeq[Reference]) extends References
-
-/**
- * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
- * @since August 23, 2020
- */
-sealed trait Selectors extends Block {
-  override type E = Selector
-}
-
-object Selectors {
-
-  def apply(selectors: Iterable[Selector]): Selectors =
-    StrictSelectors(selectors.toIndexedSeq)
-
-  def apply(selector: Selector, selectors: Selector*): Selectors =
-    Selectors(selector +: selectors.toIndexedSeq)
-
-}
-
-/**
- * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
- * @since August 23, 2020
- */
-case class StrictSelectors(elements: IndexedSeq[Selector]) extends Selectors
+case class StrictBlock(elements: IndexedSeq[Element]) extends Block
