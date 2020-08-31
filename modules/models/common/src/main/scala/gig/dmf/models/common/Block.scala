@@ -6,16 +6,17 @@ import scala.collection.immutable._
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since August 17, 2020
  */
-sealed trait Block {
-  def elements: Iterable[Element]
+trait Block {
+  type Elem <: Element
+  def elements: Iterable[Elem]
 }
 
 object Block {
 
-  def apply(elements: Iterable[Element]): Block =
+  def apply[E <: Element](elements: Iterable[E]): Block =
     StrictBlock(elements.toIndexedSeq)
 
-  def apply(element: Element, elements: Element*): Block =
+  def apply[E <: Element](element: E, elements: E*): Block =
     StrictBlock(element +: elements.toVector)
 
 }
@@ -24,4 +25,6 @@ object Block {
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since August 23, 2020
  */
-case class StrictBlock(elements: IndexedSeq[Element]) extends Block
+case class StrictBlock[E <: Element](elements: IndexedSeq[E]) extends Block {
+  override type Elem = E
+}
