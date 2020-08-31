@@ -6,7 +6,7 @@ import scala.collection.immutable._
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since August 17, 2020
  */
-sealed trait Entity {
+trait Entity {
   def blocks: Iterable[Block]
 }
 
