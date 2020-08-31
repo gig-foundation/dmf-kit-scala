@@ -6,14 +6,14 @@ import scala.collection.immutable._
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since August 17, 2020
  */
-sealed trait Element
+trait Element
 object Element
 
 /**
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since August 22, 2020
  */
-sealed trait Reference extends Element {
+trait Reference extends Element {
   def identities: Iterable[Identity]
 }
 
@@ -29,7 +29,7 @@ object Reference {
 
 case class StrictReference(identities: IndexedSeq[Identity]) extends Reference
 
-sealed trait Selector extends Element {
+trait Selector extends Element {
   def ranges: Iterable[Range]
 }
 
