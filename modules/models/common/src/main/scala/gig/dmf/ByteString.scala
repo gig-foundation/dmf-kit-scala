@@ -7,10 +7,13 @@ import java.util
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since September 07, 2020
  */
-sealed trait ByteString extends IndexedSeq[Byte]
+sealed trait ByteString extends IndexedSeq[Byte] {
+  def toArray: Array[Byte]
+}
+
 object ByteString {
 
-  case class Compact(toArray: Array[Byte]) extends ByteString {
+  case class Compact(override val toArray: Array[Byte]) extends ByteString {
 
     override def apply(index: Int) = toArray(index)
 
@@ -24,5 +27,8 @@ object ByteString {
       }
 
   }
+
+  def apply(buffer: Array[Byte]): ByteString =
+    Compact(buffer)
 
 }
