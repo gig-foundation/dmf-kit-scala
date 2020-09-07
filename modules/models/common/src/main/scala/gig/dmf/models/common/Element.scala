@@ -5,4 +5,6 @@ package gig.dmf.models.common
  * @since August 17, 2020
  */
 trait Element
-object Element
+object Element {
+  trait Reserved { _: Element => }
+}
