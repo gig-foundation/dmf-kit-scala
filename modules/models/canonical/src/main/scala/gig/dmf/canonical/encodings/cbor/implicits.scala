@@ -1,5 +1,6 @@
 package gig.dmf.canonical.encodings.cbor
 
+import gig.dmf.ByteString
 import gig.dmf.canonical.encodings.implicits._
 import gig.dmf.canonical.encodings.Canonical
 import gig.dmf.models.common._
@@ -16,43 +17,42 @@ import scala.collection.immutable._
  */
 object implicits {
 
-  //implicit val EncoderRange: Encoder[Range] =
-  //  Encoder { (writer, range) =>
-  //    writer.writeArrayOpen(3)
-  //    writer.writeInt(range.start)
-  //    writer.writeInt(range.end)
-  //    writer.writeInt(range.step)
-  //    writer.writeArrayClose()
-  //  }
-  //
-  //implicit val DecoderRange: Decoder[Range] =
-  //  Decoder { reader =>
-  //    val unbounded = reader.readArrayOpen(3)
-  //    val start = reader.readInt()
-  //    val end = reader.readInt()
-  //    val step = reader.readInt()
-  //    val range = Range(start, end, step)
-  //    reader.readArrayClose(unbounded, range)
-  //  }
-  //
-  //implicit val codecIdentity: Codec[Identity] = Codec.of[Array[Byte]].bimap(_.digest, Identity(_))
+  implicit val EncoderRange: Encoder[Range] =
+    Encoder { (writer, range) =>
+      writer.writeArrayOpen(3)
+      writer.writeInt(range.start)
+      writer.writeInt(range.end)
+      writer.writeInt(range.step)
+      writer.writeArrayClose()
+    }
 
-  //implicit def codecElement[A <: Element]: Codec[A] = ???
+  implicit val DecoderRange: Decoder[Range] =
+    Decoder { reader =>
+      val unbounded = reader.readArrayOpen(3)
+      val start = reader.readInt()
+      val end = reader.readInt()
+      val step = reader.readInt()
+      val range = Range(start, end, step)
+      reader.readArrayClose(unbounded, range)
+    }
 
-  //implicit def decoderBlock: Decoder[Block with Canonical] = ???
-  //  deriveDecoder[CanonicalBlock[A]].map(identity[Block with Canonical])
+  implicit val CodecByteString: Codec[ByteString] =
+    Codec.of[Array[Byte]]
+      .bimap(_.toArray, ByteString(_))
 
-  //implicit def encoderBlock: Encoder[Block with Canonical] = ???
-  //  deriveEncoder[CanonicalBlock[A]].contramap {
-  //    case block: CanonicalBlock[_] => block
-  //  }
+  implicit val CodecIdentity: Codec[Identity] = deriveCodec[Identity]
 
-  //implicit val decoderEntity: Decoder[Entity with Canonical] =
-  //  deriveDecoder[CanonicalEntity].map(identity[Entity with Canonical])
+  implicit val CodecReference: Codec[Reference] = deriveCodec[Reference]
 
-  //implicit val encoderEntity: Encoder[Entity with Canonical] =
-  //  deriveEncoder[CanonicalEntity].contramap {
-  //    case entity: CanonicalEntity => entity
-  //  }
+  implicit val CodecSelector: Codec[Selector] = deriveCodec[Selector]
+
+  sealed trait Functor[F[_]] {
+    def leftFold[A, B](y: B)(xs: F[A], f: (B, A) => B): B
+  }
+
+  implicit object IndexSeqFunctor extends Functor[IndexedSeq] {
+    override def leftFold[A, B](y: B)(xs: IndexedSeq[A], f: (B, A) => B): B =
+      xs.foldLeft(y)(f(_, _))
+  }
 
 }
