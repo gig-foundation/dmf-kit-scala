@@ -1,6 +1,7 @@
 package gig.dmf.models.common
 
 import scala.collection.immutable._
+import scala.reflect.ClassTag
 
 /**
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
@@ -13,14 +14,14 @@ trait Block[F[_]] {
 
 object Block {
 
-  case class Strict[E <: Element](elements: IndexedSeq[E]) extends Block[IndexedSeq] {
+  case class Strict[E <: Element: ClassTag](elements: IndexedSeq[E]) extends Block[IndexedSeq] {
     override type Elem = E
   }
 
-  def apply[E <: Element](elements: Iterable[E]): Block[IndexedSeq] =
+  def apply[E <: Element: ClassTag](elements: Iterable[E]): Block[IndexedSeq] =
     Strict(elements.toIndexedSeq)
 
-  def apply[E <: Element](element: E, elements: E*): Block[IndexedSeq] =
+  def apply[E <: Element: ClassTag](element: E, elements: E*): Block[IndexedSeq] =
     Strict(element +: elements.toVector)
 
 }
