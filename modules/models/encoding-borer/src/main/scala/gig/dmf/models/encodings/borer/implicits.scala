@@ -1,4 +1,4 @@
-package gig.dmf.canonical.encodings.cbor
+package gig.dmf.models.encodings.borer
 
 import gig.dmf.ByteString
 import gig.dmf.canonical.encodings.implicits._

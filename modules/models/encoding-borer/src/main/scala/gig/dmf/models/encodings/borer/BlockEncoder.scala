@@ -1,6 +1,6 @@
-package gig.dmf.canonical.encodings.cbor
+package gig.dmf.models.encodings.borer
 
-import gig.dmf.canonical.encodings.cbor.implicits._
+import implicits._
 import gig.dmf.models.common.Block
 import io.bullet.borer.Encoder
 import io.bullet.borer.Writer
