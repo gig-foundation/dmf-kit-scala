@@ -46,13 +46,4 @@ object implicits {
 
   implicit val CodecSelector: Codec[Selector] = deriveCodec[Selector]
 
-  sealed trait Functor[F[_]] {
-    def leftFold[A, B](y: B)(xs: F[A], f: (B, A) => B): B
-  }
-
-  implicit object IndexSeqFunctor extends Functor[IndexedSeq] {
-    override def leftFold[A, B](y: B)(xs: IndexedSeq[A], f: (B, A) => B): B =
-      xs.foldLeft(y)(f(_, _))
-  }
-
 }
