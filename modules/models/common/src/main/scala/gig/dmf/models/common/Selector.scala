@@ -1,6 +1,7 @@
 package gig.dmf.models.common
 
 import gig.dmf.models.common.Element.Reserved
+import scala.collection.immutable._
 
 /**
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
