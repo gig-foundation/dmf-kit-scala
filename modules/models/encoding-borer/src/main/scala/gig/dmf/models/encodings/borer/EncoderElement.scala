@@ -4,7 +4,7 @@ import implicits._
 import gig.dmf.models.common.Element
 import gig.dmf.models.common.Reference
 import gig.dmf.models.common.Selector
-import gig.dmf.models.encodings.borer.ElementEncoder.EncoderNotFound
+import gig.dmf.models.encodings.borer.EncoderElement.EncoderNotFound
 import io.bullet.borer.Encoder
 import io.bullet.borer.Writer
 
@@ -14,7 +14,7 @@ import scala.reflect.ClassTag
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since September 07, 2020
  */
-case class ElementEncoder(encoders: Set[TaggedEncoder]) extends Encoder[Element] {
+case class EncoderElement(encoders: Set[TaggedEncoder]) extends Encoder[Element] {
 
   private val encodersByTag: Map[ClassTag[_], TaggedEncoder] =
     encoders
@@ -45,16 +45,16 @@ case class ElementEncoder(encoders: Set[TaggedEncoder]) extends Encoder[Element]
 
 }
 
-object ElementEncoder {
+object EncoderElement {
 
   case class EncoderNotFound[A](value: A) extends IllegalStateException(s"No encoder for $value.")
 
-  implicit class Ops(val self: ElementEncoder) extends AnyVal {
+  implicit class Ops(val self: EncoderElement) extends AnyVal {
 
-    def :+[A <: Element: ClassTag](encoder: Encoder[A]): ElementEncoder =
+    def :+[A <: Element: ClassTag](encoder: Encoder[A]): EncoderElement =
       self :+ TaggedEncoder(encoder)
 
-    def :+[A <: Element](encoder: TaggedEncoder): ElementEncoder =
+    def :+[A <: Element](encoder: TaggedEncoder): EncoderElement =
       self.copy(self.encoders + encoder)
 
   }

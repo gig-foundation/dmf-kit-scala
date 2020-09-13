@@ -10,7 +10,7 @@ import io.bullet.borer.Writer
  * @author <a href="mailto:michael@ahlers.consulting">Michael Ahlers</a>
  * @since September 07, 2020
  */
-class BlockEncoder[F[_]: Foldable] extends Encoder[Block[F]] {
+class EncoderBlock[F[_]: Foldable] extends Encoder[Block[F]] {
 
   override def write(writer: Writer, value: Block[F]) = {
     implicit def enc: Encoder[value.Elem] = ???
