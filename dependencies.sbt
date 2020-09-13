@@ -2,6 +2,10 @@ ThisBuild / scalaVersion := "2.12.12"
 ThisBuild / crossScalaVersions += "2.13.3"
 
 ThisBuild / libraryDependencies ++=
+  "org.typelevel" %% "cats-core" % "2.0.0" ::
+    Nil
+
+ThisBuild / libraryDependencies ++=
   "com.softwaremill.diffx" %% "diffx-scalatest" % "0.3.29" % Test ::
     "com.github.alexarchambault" %% "scalacheck-shapeless_1.14" % "1.2.5" % Test ::
     "org.scalacheck" %% "scalacheck" % "1.14.3" % Test ::
