@@ -30,7 +30,7 @@ case class ElementEncoder(encoders: Map[Class[_], TypedEncoder]) extends Encoder
         encoders
           .get(value.getClass)
           .flatMap {
-            case TypedEncoderImpl(tag, encoder) =>
+            case TypedEncoder(tag, encoder) =>
               tag
                 .unapply(value)
                 .map(encoder.write(writer, _))
@@ -45,7 +45,7 @@ object ElementEncoder {
 
   implicit class Ops(val self: ElementEncoder) extends AnyVal {
     def :+[A <: Element](encoder: Encoder[A])(implicit A: ClassTag[A]): ElementEncoder =
-      self.copy(self.encoders.updated(A.runtimeClass, TypedEncoderImpl(A, encoder)))
+      self.copy(self.encoders.updated(A.runtimeClass, TypedEncoder(A, encoder)))
   }
 
 }

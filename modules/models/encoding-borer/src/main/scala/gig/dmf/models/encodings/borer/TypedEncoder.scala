@@ -14,6 +14,18 @@ sealed trait TypedEncoder {
   def encoder: Encoder[Type]
 }
 
-case class TypedEncoderImpl[A](tag: ClassTag[A], encoder: Encoder[A]) extends TypedEncoder {
-  override type Type = A
+object TypedEncoder {
+
+  private case class Default[A](tag: ClassTag[A], encoder: Encoder[A]) extends TypedEncoder {
+    override type Type = A
+  }
+
+  def unapply(encoder: TypedEncoder) =
+    encoder match {
+      case Default(tag, encoder) => Some((tag, encoder))
+    }
+
+  def apply[A](tag: ClassTag[A], encoder: Encoder[A]): TypedEncoder =
+    Default(tag, encoder)
+
 }
