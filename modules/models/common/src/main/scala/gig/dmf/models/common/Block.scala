@@ -8,20 +8,20 @@ import scala.reflect.ClassTag
  * @since August 17, 2020
  */
 trait Block[F[_]] {
-  type Elem <: Element
-  def elements: F[Elem]
+  type Type <: Element
+  def elements: F[Type]
 }
 
 object Block {
 
-  case class Strict[E <: Element: ClassTag](elements: IndexedSeq[E]) extends Block[IndexedSeq] {
-    override type Elem = E
+  case class Strict[A <: Element](override val elements: IndexedSeq[A]) extends Block[IndexedSeq] {
+    override type Type = A
   }
 
-  def apply[E <: Element: ClassTag](elements: Iterable[E]): Block[IndexedSeq] =
+  def apply[A <: Element](elements: Iterable[A]): Block[IndexedSeq] =
     Strict(elements.toIndexedSeq)
 
-  def apply[E <: Element: ClassTag](element: E, elements: E*): Block[IndexedSeq] =
+  def apply[A <: Element: ClassTag](element: A, elements: A*): Block[IndexedSeq] =
     Strict(element +: elements.toVector)
 
 }
